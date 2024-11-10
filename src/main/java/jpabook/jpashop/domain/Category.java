@@ -26,10 +26,16 @@ public class Category {
 
     // 부모자식 관계(=자기 자긴과의 연관관계)
     // 다른 엔티티가 아닌 이름만 다른거라 똑같은 방식으로 해주면 됨
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="parent_id") // parent_id 컬럼에 상위 카테고리의 id가 저장됨
     private Category parent;
 
     @OneToMany(mappedBy = "parent") // child 필드가 parent 필드에 의해 매핑됨
-    private List<Category> chile = new ArrayList<>();
+    private List<Category> child = new ArrayList<>();
+
+    // === 연관관계 메서드 ===
+    public void addChildCategory(Category child){
+        this.child.add(child); // 부모 컬렉션에 추가
+        child.setParent(this); // 자식에도 부모가 누군지 추가
+    }
 }
