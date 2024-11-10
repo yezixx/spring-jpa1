@@ -1,8 +1,12 @@
 package jpabook.jpashop.domain.item;
 
 import jakarta.persistence.*;
+import jpabook.jpashop.domain.Category;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -19,4 +23,7 @@ public abstract class Item { // 구현체 가지고 갈 거라 추상 클래스�
     private int price;
 
     private int stockQuantity;
+
+    @ManyToMany(mappedBy = "items")
+    private List<Category> categories = new ArrayList<>();
 }
