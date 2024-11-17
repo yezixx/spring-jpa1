@@ -1,4 +1,4 @@
-package service;
+package jpabook.jpashop.service;
 
 import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.repository.MemberRepository;
@@ -14,7 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberService {
     //@Autowired // 스프링이 스프링빈에 등록되어있는 멤버리포지토리 인젝션해줌 (field injection)
-    private MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
 
     // 회원 가입
     @Transactional

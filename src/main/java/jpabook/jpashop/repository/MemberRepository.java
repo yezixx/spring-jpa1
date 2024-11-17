@@ -3,15 +3,17 @@ package jpabook.jpashop.repository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jpabook.jpashop.domain.Member;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository // 컴포넌트 스캔에 의해 스프링빈으로 관리됨
+@RequiredArgsConstructor
 public class MemberRepository {
 
-    @PersistenceContext // JPA가 제공하는 표준
-    private EntityManager em; // 스프링이 엔티티 매니저 만들어서 주입해줌(인젝션)
+    //@PersistenceContext // JPA가 제공하는 표준
+    private final EntityManager em; // 스프링이 엔티티 매니저 만들어서 주입해줌(인젝션)
 
     // 회원 저장
     public void save(Member member){
