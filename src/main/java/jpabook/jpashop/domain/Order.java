@@ -56,4 +56,52 @@ public class Order {
         delivery.setOrder(this);
     }
 
+    // ======= 생성 메서드 =======
+    /*
+    * 밖에서 오더를 set하는 방식이 아니라 생성을 할 때부터 createOrder를 무조건 호출해야 됨
+    * 주문 생성과 관련된 비즈니스 로직은 여기에 모아둠
+    * */
+    public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItems){
+        Order order = new Order();
+        order.setMember(member);
+        order.setDelivery(delivery);
+        for (OrderItem orderItem:orderItems) {
+            order.addOrderItem(orderItem);
+        }
+        order.setStatus(OrderStatus.ORDER); // 처음 상태로 강제
+        order.setOrderDate(LocalDateTime.now());
+        return order;
+    }
+
+    // ======= 비즈니스 로직 =======
+    /**
+     * 주문 취소
+     */
+    public void cancel() {
+        if(delivery.getStatus() == DeliveryStatus.COMP) { // 배송이 완료된 상품이면
+            throw new IllegalStateException("이미 배송완료된 상품은 취소가 불가능합니다.");
+        }
+
+        this.setStatus(OrderStatus.CANCEL); // 주문 상태 변경
+        for (OrderItem orderItem: orderItems){ // 주문한 상품마다 취소 -> 재고 원상복구
+            orderItem.cancel();
+        }
+    }
+
+    // == 조회 로직 ==
+    /**
+     * 전체 주문 가격 조회
+     */
+    public int getTotalPrice(){
+        int totalPrice=0;
+        for (OrderItem orderItem:orderItems){
+            totalPrice += orderItem.getTotalPrice(); // += 주문 수량 * 주문 금액
+        }
+        return totalPrice;
+        /*alt+enterfh stream으로 바꿀 수도 있음*/
+        /*reutnr orderItems.stream()
+                .mapToInt(OrderItem::getTotalPrice)
+                .sum();*/
+    }
+
 }

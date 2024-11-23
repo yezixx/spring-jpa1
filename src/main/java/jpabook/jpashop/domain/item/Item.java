@@ -34,7 +34,7 @@ public abstract class Item { // 구현체 가지고 갈 거라 추상 클래스�
         this.stockQuantity += quantity;
     }
     // 재고 수량 감소
-    public void removeQuantity(int quantity){
+    public void removeStock(int quantity){
         int restStock = this.stockQuantity - quantity;
         if(restStock<0){
             throw new NotEnoughStockException("need more stock");
