@@ -4,10 +4,12 @@ spring:
     username: sa
     password:
     driver-class-name: org.h2.Driver
-
+  thymeleaf:
+  prefix: classpath:/templates/
+  suffix: .html
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         show_sql: true
