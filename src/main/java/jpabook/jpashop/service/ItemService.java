@@ -15,7 +15,7 @@ public class ItemService {
     private final ItemRepository itemRepository;
 
     @Transactional // 쓰기
-    public void save(Item item){
+    public void saveItem(Item item){
         itemRepository.save(item);
     }
 
